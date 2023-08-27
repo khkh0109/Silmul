@@ -53,7 +53,6 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <EditPortfolio />,
         loader: checkAuth,
       },
-      // ? AddEmail 페이지는 어떻게 처리해야 하는지?
       {
         path: '/AddEmail',
         element: <AddEmail />,
