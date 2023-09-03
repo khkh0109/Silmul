@@ -55,34 +55,6 @@ export const Input = styled.input`
   }
 `;
 
-export const SkillsSelect = styled.select`
-  width: 100%;
-  height: 34px;
-  padding: 5px 5px 5px 10px;
-  border: 1px solid ${COLOR.subFontColor};
-  border-radius: 8px 0 0 8px;
-  color: ${({ theme }) => theme.themeStyle.fontColor};
-  background-color: ${({ theme }) => theme.themeStyle.searchBarColor};
-  font-size: 14px;
-  cursor: pointer;
-
-  // 기본 화살표 스타일 제거
-  -o-appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  :focus {
-    outline: none;
-  }
-
-  @media ${({ theme }) => theme.breakpoints.DESKTOPMIN} {
-    height: 45px;
-    padding-left: 15px;
-    font-size: 15px;
-  }
-`;
-
 export const Nav = styled.nav`
   position: relative;
 `;

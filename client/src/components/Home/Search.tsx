@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import * as S from './Search.style';
-import { skillList } from './skillsData';
+import Dropdown from './Dropdown';
+import { skillData } from './skillsData';
 
 type SearchProps = {
   setValue: (value: string) => void;
@@ -10,16 +12,20 @@ type SearchProps = {
 };
 
 function Search({ setValue, category, setCategory, handleSearch, setSkillValue }: SearchProps) {
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const [visible, setVisible] = useState(false);
+  const [skillList, setSkillList] = useState<typeof skillData | null>(null);
+
+  const filterSkills = (inputValue: string): typeof skillData => {
+    const value = inputValue.toLowerCase().trim().replace(/\s/g, '');
+
+    return skillData.filter((item) => {
+      const skill = item.toLowerCase().trim().replace(/\s/g, '');
+      return skill.includes(value);
+    });
   };
 
   const handleSelectCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-  };
-
-  const handleSelectSkill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSkillValue(e.target.value);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -28,60 +34,83 @@ function Search({ setValue, category, setCategory, handleSearch, setSkillValue }
     }
   };
 
+  const handleItemClick = (skill: string) => {
+    setSkillValue(skill);
+    setVisible(false);
+  };
+
   const handleClickList = (e: React.MouseEvent<HTMLLIElement>) => {
     setCategory(e.currentTarget.id);
   };
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    const hasSkill = hasSkillValue(e.target.value, category);
+    setVisible(hasSkill);
+    if (e.target.value.trim() !== '') {
+      const filteredSkills = filterSkills(e.target.value);
+      setSkillList(filteredSkills);
+    }
+  };
+
+  const hasSkillValue = (value: string, category: string) => {
+    if (category !== 'skill') {
+      return false;
+    }
+
+    if (value.trim() === '') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
-    <S.SearchWrapper>
-      <S.InputWrapper>
-        {category === 'skill' ? (
-          <S.SkillsSelect onChange={handleSelectSkill}>
-            <option value=''>-- 기술 스택을 선택하세요 --</option>
-            {skillList.map((skill, index) => {
-              return (
-                <option key={index} value={skill}>
-                  {skill}
-                </option>
-              );
-            })}
-          </S.SkillsSelect>
-        ) : (
-          <>
-            <S.SearchIcon />
-            <S.Input
-              type='text'
-              placeholder='검색하기'
-              onChange={handleInput}
-              onKeyDown={handleKeyPress}
-            />
-          </>
-        )}
-      </S.InputWrapper>
-      <S.Nav>
-        <S.NavList>
-          <li
-            id='userName'
-            className={category === 'userName' ? 'select' : ''}
-            onClick={handleClickList}
-          >
-            작성자
-          </li>
-          <li id='title' className={category === 'title' ? 'select' : ''} onClick={handleClickList}>
-            프로젝트
-          </li>
-          <li id='skill' className={category === 'skill' ? 'select' : ''} onClick={handleClickList}>
-            기술스택
-          </li>
-        </S.NavList>
-        <S.Select name='search' id='search' onChange={handleSelectCategory} value={category}>
-          <option value='userName'>작성자</option>
-          <option value='title'>프로젝트</option>
-          <option value='skill'>기술스택</option>
-        </S.Select>
-        <S.ArrowDownIcon />
-      </S.Nav>
-    </S.SearchWrapper>
+    <>
+      <S.SearchWrapper>
+        <S.InputWrapper>
+          <S.SearchIcon />
+          <S.Input
+            type='text'
+            placeholder='검색하기'
+            onChange={handleInput}
+            onKeyDown={handleKeyPress}
+          />
+        </S.InputWrapper>
+        <S.Nav>
+          <S.NavList>
+            <li
+              id='userName'
+              className={category === 'userName' ? 'select' : ''}
+              onClick={handleClickList}
+            >
+              작성자
+            </li>
+            <li
+              id='title'
+              className={category === 'title' ? 'select' : ''}
+              onClick={handleClickList}
+            >
+              프로젝트
+            </li>
+            <li
+              id='skill'
+              className={category === 'skill' ? 'select' : ''}
+              onClick={handleClickList}
+            >
+              기술스택
+            </li>
+          </S.NavList>
+          <S.Select name='search' id='search' onChange={handleSelectCategory} value={category}>
+            <option value='userName'>작성자</option>
+            <option value='title'>프로젝트</option>
+            <option value='skill'>기술스택</option>
+          </S.Select>
+          <S.ArrowDownIcon />
+        </S.Nav>
+      </S.SearchWrapper>
+      <Dropdown visible={visible} skillList={skillList} handleItemClick={handleItemClick} />
+    </>
   );
 }
 

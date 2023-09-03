@@ -1,4 +1,4 @@
-export const skillList = [
+export const skillData = [
   'Angular',
   'ArangoDB',
   'Arcus',
