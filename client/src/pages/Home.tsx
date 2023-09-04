@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 import { useGetPortfolioList } from '../hooks/useGetPortfolioList';
 import { useAuth } from '../hooks/useAuth';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
+import { useDebounce } from '../hooks/useDebounce';
 
 import Banner from '../components/Home/Banner';
 import Sort from '../components/Home/Sort';
@@ -19,10 +20,7 @@ function Home() {
   const [sortOption, setSortOption] = useState<SortOption>('createdAt');
   const [category, setCategory] = useState('userName');
   const [value, setValue] = useState('');
-  const [skillValue, setSkillValue] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-  const [searchCategory, setSearchCategory] = useState('');
-
+  const inputValue = useDebounce<string>(value, 500);
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -32,11 +30,7 @@ function Home() {
     ErrorInfo,
     fetchNextPortfolio,
     hasNextPortfolio,
-  } = useGetPortfolioList(sortOption, searchCategory, searchValue);
-
-  useEffect(() => {
-    handleSearch();
-  }, [skillValue]);
+  } = useGetPortfolioList(sortOption, category, inputValue);
 
   useAuth();
 
@@ -48,30 +42,15 @@ function Home() {
     fetchNextPortfolio,
   });
 
-  const handleSearch = () => {
-    if (category === 'skill') {
-      setSearchValue(skillValue);
-    } else {
-      setSearchValue(value);
-    }
-    setSearchCategory(category);
-  };
-
   return (
     <S.Container>
       <Banner />
       <Sort setSortOption={setSortOption} />
       <S.ContentWrapper>
-        <Search
-          setValue={setValue}
-          category={category}
-          setCategory={setCategory}
-          handleSearch={handleSearch}
-          setSkillValue={setSkillValue}
-        />
+        <Search setValue={setValue} category={category} setCategory={setCategory} />
         {isPortfoliosError || isPortfolioFetching
           ? null
-          : searchValue && (
+          : inputValue && (
               <S.Alert>
                 총 <strong>{PortfolioData?.pages[0].pageInfo.totalElements}개</strong>의
                 포트폴리오를 찾았습니다.

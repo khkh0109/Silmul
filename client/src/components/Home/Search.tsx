@@ -7,11 +7,9 @@ type SearchProps = {
   setValue: (value: string) => void;
   category: string;
   setCategory: (option: string) => void;
-  handleSearch: () => void;
-  setSkillValue: (skill: string) => void;
 };
 
-function Search({ setValue, category, setCategory, handleSearch, setSkillValue }: SearchProps) {
+function Search({ setValue, category, setCategory }: SearchProps) {
   const [visible, setVisible] = useState(false);
   const [skillList, setSkillList] = useState<typeof skillData | null>(null);
 
@@ -28,14 +26,8 @@ function Search({ setValue, category, setCategory, handleSearch, setSkillValue }
     setCategory(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
   const handleItemClick = (skill: string) => {
-    setSkillValue(skill);
+    setValue(skill);
     setVisible(false);
   };
 
@@ -70,12 +62,7 @@ function Search({ setValue, category, setCategory, handleSearch, setSkillValue }
       <S.SearchWrapper>
         <S.InputWrapper>
           <S.SearchIcon />
-          <S.Input
-            type='text'
-            placeholder='검색하기'
-            onChange={handleInput}
-            onKeyDown={handleKeyPress}
-          />
+          <S.Input type='text' placeholder='검색하기' onChange={handleInput} />
         </S.InputWrapper>
         <S.Nav>
           <S.NavList>
