@@ -4,12 +4,12 @@ import Dropdown from './Dropdown';
 import { skillData } from './skillsData';
 
 type SearchProps = {
-  setValue: (value: string) => void;
+  setSearchTerm: (value: string) => void;
   category: string;
   setCategory: (option: string) => void;
 };
 
-function Search({ setValue, category, setCategory }: SearchProps) {
+function Search({ setSearchTerm, category, setCategory }: SearchProps) {
   const [visible, setVisible] = useState(false);
   const [skillList, setSkillList] = useState<typeof skillData | null>(null);
 
@@ -27,7 +27,7 @@ function Search({ setValue, category, setCategory }: SearchProps) {
   };
 
   const handleItemClick = (skill: string) => {
-    setValue(skill);
+    setSearchTerm(skill);
     setVisible(false);
   };
 
@@ -36,7 +36,7 @@ function Search({ setValue, category, setCategory }: SearchProps) {
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setSearchTerm(e.target.value);
     const hasSkill = hasSkillValue(e.target.value, category);
     setVisible(hasSkill);
     if (e.target.value.trim() !== '') {

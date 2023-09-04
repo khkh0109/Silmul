@@ -17,10 +17,10 @@ import * as S from './Home.style';
 import { GetPortfolio, SortOption } from '../types/index';
 
 function Home() {
-  const [sortOption, setSortOption] = useState<SortOption>('createdAt');
+  const [sortBy, setSortBy] = useState<SortOption>('createdAt');
   const [category, setCategory] = useState('userName');
-  const [value, setValue] = useState('');
-  const inputValue = useDebounce<string>(value, 500);
+  const [searchTerm, setSearchTerm] = useState('');
+  const inputValue = useDebounce<string>(searchTerm, 500);
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -30,7 +30,7 @@ function Home() {
     ErrorInfo,
     fetchNextPortfolio,
     hasNextPortfolio,
-  } = useGetPortfolioList(sortOption, category, inputValue);
+  } = useGetPortfolioList(sortBy, category, inputValue);
 
   useAuth();
 
@@ -45,9 +45,9 @@ function Home() {
   return (
     <S.Container>
       <Banner />
-      <Sort setSortOption={setSortOption} />
+      <Sort setSortBy={setSortBy} />
       <S.ContentWrapper>
-        <Search setValue={setValue} category={category} setCategory={setCategory} />
+        <Search setSearchTerm={setSearchTerm} category={category} setCategory={setCategory} />
         {isPortfoliosError || isPortfolioFetching
           ? null
           : inputValue && (

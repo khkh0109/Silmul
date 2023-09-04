@@ -36,7 +36,7 @@ const Portfolio: React.FC<IdProps> = ({ userId }) => {
   if (getUserPortfolioLoading) {
     return (
       <>
-        <Sort setSortOption={setOrderName} />
+        <Sort setSortBy={setOrderName} />
         <S.ErrorContainer>
           <Loading />
         </S.ErrorContainer>
@@ -46,7 +46,7 @@ const Portfolio: React.FC<IdProps> = ({ userId }) => {
 
   return (
     <>
-      <Sort setSortOption={setOrderName} />
+      <Sort setSortBy={setOrderName} />
       {UserPortfolios && (
         <>
           {UserPortfolios.pages[0].data.length === 0 ? (

@@ -3,10 +3,10 @@ import * as S from './Sort.style';
 import { SortOption } from '../../types/index';
 
 type SortProps = {
-  setSortOption?: (sortOption: SortOption) => void;
+  setSortBy?: (setSortBy: SortOption) => void;
 };
 
-function Sort({ setSortOption }: SortProps) {
+function Sort({ setSortBy }: SortProps) {
   const [selectedButton, setSelectedButton] = useState('최신순');
 
   const getSortOption = (buttonName: string) => {
@@ -27,8 +27,8 @@ function Sort({ setSortOption }: SortProps) {
     setSelectedButton(buttonName);
 
     const sortType = getSortOption(buttonName);
-    if (setSortOption) {
-      setSortOption(sortType);
+    if (setSortBy) {
+      setSortBy(sortType);
     }
   };
 
