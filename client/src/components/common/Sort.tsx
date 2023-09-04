@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as S from './Sort.style';
-import { SortOption } from '../../types/index';
+import { SortOption } from '../../types';
 
 type SortProps = {
   setSortBy?: (setSortBy: SortOption) => void;

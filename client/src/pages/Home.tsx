@@ -6,7 +6,7 @@ import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 import { useDebounce } from '../hooks/useDebounce';
 
 import Banner from '../components/Home/Banner';
-import Sort from '../components/Home/Sort';
+import Sort from '../components/common/Sort';
 import Search from '../components/Home/Search';
 import ArrowUp from '../components/Home/ArrowUp';
 import Card from '../components/common/Card';

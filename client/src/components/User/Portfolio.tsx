@@ -1,6 +1,6 @@
 import * as S from './Portfolio.style';
 import Card from '../common/Card';
-import Sort from '../Home/Sort';
+import Sort from '../common/Sort';
 import React, { useRef, useState } from 'react';
 import { useGetUserPortfolios } from '../../hooks/useGetUserPortfolios';
 import Loading from '../common/Loading';
