@@ -14,11 +14,11 @@ import Loading from '../components/common/Loading';
 
 import * as S from './Home.style';
 
-import { GetPortfolio, SortOption } from '../types/index';
+import { GetPortfolio, SortOption, CategoryOption } from '../types/index';
 
 function Home() {
   const [sortBy, setSortBy] = useState<SortOption>('createdAt');
-  const [category, setCategory] = useState('userName');
+  const [category, setCategory] = useState<CategoryOption>('userName');
   const [searchTerm, setSearchTerm] = useState('');
   const inputValue = useDebounce<string>(searchTerm, 500);
   const targetRef = useRef<HTMLDivElement | null>(null);

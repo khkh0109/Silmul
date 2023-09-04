@@ -2,11 +2,12 @@ import { useState } from 'react';
 import * as S from './Search.style';
 import Dropdown from './Dropdown';
 import { skillData } from './skillsData';
+import { CategoryOption } from '../../types';
 
 type SearchProps = {
   setSearchTerm: (value: string) => void;
-  category: string;
-  setCategory: (option: string) => void;
+  category: CategoryOption;
+  setCategory: (option: CategoryOption) => void;
 };
 
 function Search({ setSearchTerm, category, setCategory }: SearchProps) {
@@ -23,7 +24,7 @@ function Search({ setSearchTerm, category, setCategory }: SearchProps) {
   };
 
   const handleSelectCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
+    setCategory(e.target.value as CategoryOption);
   };
 
   const handleItemClick = (skill: string) => {
@@ -32,7 +33,7 @@ function Search({ setSearchTerm, category, setCategory }: SearchProps) {
   };
 
   const handleClickList = (e: React.MouseEvent<HTMLLIElement>) => {
-    setCategory(e.currentTarget.id);
+    setCategory(e.currentTarget.id as CategoryOption);
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ function Search({ setSearchTerm, category, setCategory }: SearchProps) {
     }
   };
 
-  const hasSkillValue = (value: string, category: string) => {
+  const hasSkillValue = (value: string, category: CategoryOption) => {
     if (category !== 'skill') {
       return false;
     }

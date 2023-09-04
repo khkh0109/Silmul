@@ -194,6 +194,9 @@ export type DeletePortfolioComment = {
 // Sort
 export type SortOption = 'createdAt' | 'likes' | 'views';
 
+// Category
+export type CategoryOption = 'userName' | 'title' | 'skill';
+
 // Infinite Query PageParam
 export type PageParam = {
   pageParam?: number;
