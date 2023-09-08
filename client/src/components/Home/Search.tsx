@@ -40,7 +40,7 @@ function Search({ setSearchTerm, category, setCategory }: SearchProps) {
     setSearchTerm(e.target.value);
     const hasSkill = hasSkillValue(e.target.value, category);
     setVisible(hasSkill);
-    if (e.target.value.trim() !== '') {
+    if (e.target.value.trim() !== '' && category === 'skill') {
       const filteredSkills = filterSkills(e.target.value);
       setSkillList(filteredSkills);
     }
